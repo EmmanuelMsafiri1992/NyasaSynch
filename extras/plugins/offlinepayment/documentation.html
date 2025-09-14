@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Offline Payment Documentation</title>
+	<style>
+		body {
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			background-color: #f0f0f0;
+		}
+		
+		hr {
+			border-top: 1px solid #8c8b8b;
+		}
+		
+		#content {
+			background-color: #ffffff;
+			margin-left: auto;
+			margin-right: auto;
+			width: 900px;
+			padding: 20px;
+		}
+		
+		pre {
+			font-family: "Courier 10 Pitch", Courier, monospace;
+			font-size: 14px;
+			line-height: 140%;
+			white-space: pre;
+			white-space: pre-wrap;
+			white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+		}
+		
+		code {
+			font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+			font-size: 90%;
+			color: #f4645f;
+			background-color: #f0f2f1;
+			text-shadow: 0 1px #fff;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+		
+		li {
+			line-height: 140%;
+		}
+	</style>
+</head>
+
+<body>
+<div id="content">
+	<h2>DOCUMENTATION</h2>
+	<hr>
+	<br>
+	Offline Payment (v3.0) plugin for <a href="https://1.envato.market/30rEB" target="_blank">LaraClassifier</a> and <a
+		href="https://1.envato.market/Ld3mZ" target="_blank">Nyasajob</a>.
+	
+	<h3>Installation</h3>
+	To install this plugin:
+	
+	<ul>
+		<li>Copy the plugin's (uncompressed) folder into the script's plugins folder like this: <code>/extras/plugins/offlinepayment/</code></li>
+		<li>Go to your Admin panel &rarr; Plugins (and click on "Install") to install it.</li>
+	</ul>
+	
+	<h3>Compatibility</h3>
+	<ul>
+		<li>v3.0 => LaraClassifier v12.0.0+ and Nyasajob v11.0.0+</li>
+		<li>v2.9 => LaraClassifier (v11.0.0 to 11.0.4) and Nyasajob (v10.0.0 to v10.0.4)</li>
+		<li>v2.8 => LaraClassifier v10.2.0+ and Nyasajob v9.2.0+</li>
+		<li>v2.7 => LaraClassifier (v10.1.0 to v10.1.4) and Nyasajob (v9.1.0 to v9.1.5)</li>
+		<li>v2.6 => LaraClassifier (v10.0.1 to v10.0.2) and Nyasajob (v9.0.1 to v9.0.3)</li>
+		<li>v2.5 => LaraClassifier v10.0.0 and Nyasajob v9.0.0</li>
+		<li>v2.4 => LaraClassifier (v9.0.0 to v9.0.1) and Nyasajob (v8.0.0 to v8.0.1)</li>
+		<li>v2.3 => LaraClassifier (v8.0.2 to v8.0.6) and Nyasajob (v7.0.2 to v7.0.6)</li>
+		<li>v2.2 => LaraClassifier (v8.0.0 to v8.0.1) and Nyasajob (v7.0.0 to v7.0.1)</li>
+		<li>v2.1 => LaraClassifier (v7.2.0 to v7.3.8) and Nyasajob (v6.0.0 to v6.1.8)</li>
+		<li>v2.0 => LaraClassifier (v7.1.0 to v7.1.1) and Nyasajob (v5.9.0 to v5.9.1)</li>
+		<li>v1.9 => LaraClassifier (v6.9 to v7.0.x) and Nyasajob (v5.7 to v5.8.x)</li>
+		<li>v1.8 => LaraClassifier (v6.6 to v6.8) and Nyasajob (v5.4 to v5.6)</li>
+		<li>v1.7 => LaraClassifier (v6.1 to v6.5) and Nyasajob (v4.9 to v5.3)</li>
+		<li>v1.6 => LaraClassifier (v5.7 to v6.0) and Nyasajob (v4.5 to v4.8)</li>
+		<li>v1.5 => LaraClassifier (v5.2 to v5.6) and Nyasajob (v4.0 to v4.4)</li>
+		<li>v1.4 => LaraClassifier v5.1 and Nyasajob v3.9</li>
+		<li>v1.3 => LaraClassifier (v4.9 to v5.0) and Nyasajob (v3.7 to v3.8)</li>
+		<li>v1.2 => LaraClassifier (v4.6 to v4.8) and Nyasajob (v3.4 to v3.6)</li>
+		<li>v1.0 to v1.1 => LaraClassifier (v3.8 to v4.5) and Nyasajob (v2.6 to v3.3)</li>
+	</ul>
+	
+	<h3>Update</h3>
+	Replace all the plugin's files on your server.
+	
+	<h3>Configuration</h3>
+	<ul>
+		<li>Go to: Admin panel &rarr; Payment &rarr; Payment Method &rarr; (Edit the "Offline Payment" description), to add information about your various offline payment methods.</li>
+	</ul>
+	
+	<h3>Usage</h3>
+	<ul>
+		<li>After receiving the amount of an offline payment, you must manually approve the payment in the Admin panel &rarr; Payments &rarr; List &rarr; (Search the "Reason of the payment"
+			using the Listing/Ad ID and check the "Approved" checkbox)
+		</li>
+	</ul>
+	
+	
+	<h3>Translation</h3>
+	To translate this plugin into your language:
+	
+	<ul>
+		<li>Go to the languages folder at <code>/extras/plugins/offlinepayment/lang/</code></li>
+		<li>Duplicate the folder <code>/extras/plugins/offlinepayment/lang/en/</code> to <code>/extras/plugins/offlinepayment/lang/&lt;abbr&gt;/</code>
+			<br>NOTE: Don't forget replace <code>&lt;abbr&gt;</code> by your language code (e.g. "de" for German language).
+		</li>
+		<li>Open the files:
+			<br><code>/extras/plugins/offlinepayment/lang/&lt;abbr&gt;/mail.php</code>,
+			<br><code>/extras/plugins/offlinepayment/lang/&lt;abbr&gt;/messages.php</code>,
+			<br><code>/extras/plugins/offlinepayment/lang/&lt;abbr&gt;/sms.php</code>
+			<br>and translate them.
+			<br>NOTE: To translate the file, you must change the values and not the keys of PHP array.
+		</li>
+		<li>If you want to translate the Offline Payment description DB entry, you can do it by adding the value of the '<code>payment_method_description</code>' key in the plugin <code>/extras/plugins/offlinepayment/lang/&lt;abbr&gt;/messages.php</code>
+			language file.
+		</li>
+	</ul>
+	
+	<h3>Uninstallation</h3>
+	To uninstall this plugin, go to your Admin panel &rarr; Plugins (and click on "Uninstall") to uninstall it.
+	
+	<h3>Removing</h3>
+	To remove this plugin:
+	
+	<ul>
+		<li>Uninstall it</li>
+		<li>Go in the folder <code>/extras/plugins/</code> and remove the folder <code>offlinepayment/</code>.</li>
+	</ul>
+</div>
+</body>
+
+</html>

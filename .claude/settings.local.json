@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(php:*)",
+      "Bash(composer --version)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(mysql:*)",
+      "Bash(npx mix:*)",
+      "Read(//c/laragon/www/Payments/Offline Payment Addon v3.0/**)",
+      "Bash(curl:*)",
+      "Read(//c/laragon/www/nyasajob/public/**)",
+      "Bash(rsync:*)",
+      "Bash(robocopy:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Read(//c/laragon/www/nyasajob/storage/**)",
+      "Bash(xcopy:*)",
+      "Read(//c/laragon/www/nyasajob/**)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(composer install:*)",
+      "Bash(timeout:*)",
+      "Bash(grep:*)",
+      "Read(//c/laragon/www/updated/old/**)",
+      "Bash(python:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

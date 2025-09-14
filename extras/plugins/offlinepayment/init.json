@@ -1,0 +1,10 @@
+{
+    "name": "offlinepayment",
+    "version": "4.0.2",
+    "display_name": "Offline Payment",
+    "description": "Offline Payment (Bank Transfer, Check, Cash, etc.)",
+    "author": "Bedigit",
+    "category": "payment",
+    "has_installer": true,
+    "item_id": "20765766"
+}
