@@ -121,7 +121,8 @@ class ProcessAtsWebhooks extends Command
 
         foreach ($webhooks as $webhook) {
             try {
-                $this->line("Retrying webhook {$webhook->id} (attempt {$webhook->retry_count + 1}/3)");
+                $attemptNumber = $webhook->retry_count + 1;
+                $this->line("Retrying webhook {$webhook->id} (attempt {$attemptNumber}/3)");
 
                 $webhook->resetForRetry();
                 $this->processWebhook($webhook);
