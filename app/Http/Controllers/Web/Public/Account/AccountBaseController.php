@@ -41,39 +41,133 @@ abstract class AccountBaseController extends FrontController
 	{
 		$authUser = auth()->user();
 		if (empty($authUser)) return;
-		
+
 		// Get user's stats - Call API endpoint
 		$endpoint = '/users/' . $authUser->getAuthIdentifier() . '/stats';
 		$data = makeApiRequest('get', $endpoint);
-		
+
 		// Retrieve the user's stats
 		$userStats = data_get($data, 'result');
-		
-		// Format the account's sidebar menu
-		$accountMenu = collect();
-		if (isset($this->userMenu)) {
-			$accountMenu = $this->userMenu->groupBy('group');
-			$accountMenu = $accountMenu->map(function ($group, $k) use ($userStats) {
-				return $group->map(function ($item, $key) use ($userStats) {
-					$isActive = (isset($item['isActive']) && $item['isActive']);
-					$countVar = isset($item['countVar']) ? data_get($userStats, $item['countVar']) : null;
-					$cssClass = !empty($item['countCustomClass']) ? $item['countCustomClass'] . ' hide' : '';
-					
-					$item['isActive'] = $isActive;
-					$item['countVar'] = $countVar;
-					$item['cssClass'] = $cssClass;
-					
-					return $item;
-				})->reject(function ($item, $key) {
-					return (is_numeric($item['countVar']) && $item['countVar'] < 0);
-				});
-			})->reject(function ($group, $k) {
-				return ($group instanceof Collection) ? $group->isEmpty() : empty($group);
-			});
-		}
-		
+
+		// Create account menu directly if userMenu is not available or empty
+		$accountMenu = $this->createAccountMenuDirect($authUser, $userStats);
+
 		// Export data to views
 		view()->share('userStats', $userStats);
 		view()->share('accountMenu', $accountMenu);
+	}
+
+	/**
+	 * Create the account menu directly for all account controllers
+	 */
+	private function createAccountMenuDirect($authUser, $userStats = null): Collection
+	{
+		// Create the menu structure based on user type
+		$menuArray = [];
+
+		// For employers (user_type_id = 1)
+		if ($authUser->user_type_id == 1) {
+			$menuArray = [
+				[
+					'name'       => t('My companies'),
+					'url'        => url('account/companies'),
+					'icon'       => 'fa-regular fa-building',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'companies', 0),
+					'isActive'   => (request()->segment(2) == 'companies'),
+				],
+				[
+					'name'       => t('my_listings'),
+					'url'        => url('account/posts/list'),
+					'icon'       => 'fa-solid fa-list',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'posts.published', 0),
+					'isActive'   => (request()->segment(3) == 'list'),
+				],
+				[
+					'name'       => t('pending_approval'),
+					'url'        => url('account/posts/pending-approval'),
+					'icon'       => 'fa-solid fa-hourglass-half',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'posts.pendingApproval', 0),
+					'isActive'   => (request()->segment(3) == 'pending-approval'),
+				],
+				[
+					'name'       => t('archived_ads'),
+					'url'        => url('account/posts/archived'),
+					'icon'       => 'fa-solid fa-calendar-xmark',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'posts.archived', 0),
+					'isActive'   => (request()->segment(3) == 'archived'),
+				],
+				[
+					'name'       => t('messenger'),
+					'url'        => url('account/messages'),
+					'icon'       => 'fa-regular fa-envelope',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'threads.all', 0),
+					'isActive'   => (request()->segment(2) == 'messages'),
+				],
+				[
+					'name'       => t('promotion'),
+					'url'        => url('account/transactions/promotion'),
+					'icon'       => 'fa-solid fa-coins',
+					'group'      => 'Transactions',
+					'countVar'   => data_get($userStats, 'transactions.promotion', 0),
+					'isActive'   => (request()->segment(2) == 'transactions' && request()->segment(3) == 'promotion'),
+				],
+			];
+		}
+
+		// For job seekers (user_type_id = 2)
+		if ($authUser->user_type_id == 2) {
+			$menuArray = [
+				[
+					'name'       => t('My resumes'),
+					'url'        => url('account/resumes'),
+					'icon'       => 'fa-solid fa-paperclip',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'resumes', 0),
+					'isActive'   => (request()->segment(2) == 'resumes'),
+				],
+				[
+					'name'       => t('Favourite jobs'),
+					'url'        => url('account/posts/favourite'),
+					'icon'       => 'fa-solid fa-bookmark',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'posts.favourite', 0),
+					'isActive'   => (request()->segment(3) == 'favourite'),
+				],
+				[
+					'name'       => t('Saved searches'),
+					'url'        => url('account/saved-searches'),
+					'icon'       => 'fa-solid fa-bell',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'savedSearch', 0),
+					'isActive'   => (request()->segment(2) == 'saved-searches'),
+				],
+				[
+					'name'       => t('messenger'),
+					'url'        => url('account/messages'),
+					'icon'       => 'fa-regular fa-envelope',
+					'group'      => t('my_listings'),
+					'countVar'   => data_get($userStats, 'threads.all', 0),
+					'isActive'   => (request()->segment(2) == 'messages'),
+				],
+			];
+		}
+
+		// Add My Account section for all user types
+		$menuArray[] = [
+			'name'       => t('my_account'),
+			'url'        => url('account'),
+			'icon'       => 'fa-solid fa-gear',
+			'group'      => t('my_account'),
+			'countVar'   => null,
+			'isActive'   => (request()->segment(1) == 'account' && request()->segment(2) == null),
+		];
+
+		// Group menu by sections
+		return collect($menuArray)->groupBy('group');
 	}
 }
