@@ -26,7 +26,27 @@ use Larapen\LaravelMetaTags\Facades\MetaTag;
 class EditController extends AccountBaseController
 {
 	use VerificationTrait;
-	
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		// Ensure user menu is available for sidebar
+		$this->ensureUserMenu();
+	}
+
+	/**
+	 * Ensure the user menu is properly set for the sidebar
+	 */
+	private function ensureUserMenu()
+	{
+		// The userMenu should already be set in parent FrontController
+		// But if it's not available, we ensure the accountMenu gets processed
+		if (auth()->check()) {
+			$this->leftMenuInfo();
+		}
+	}
+
 	/**
 	 * @return \Illuminate\Contracts\View\View
 	 */
@@ -41,19 +61,26 @@ class EditController extends AccountBaseController
 		if (!$authUser) {
 			abort(401, 'Authentication required');
 		}
-		
+
 		// User Type missing notification
 		if (empty($authUser->user_type_id)) {
 			flash(t('select_a_user_type_to_start'))->warning();
 		}
-		
+
+		// Debug: Check if accountMenu is properly set
+		$accountMenu = view()->shared('accountMenu', collect());
+		if ($accountMenu->isEmpty()) {
+			// Force refresh the menu if it's empty
+			$this->leftMenuInfo();
+		}
+
 		$appName = config('settings.app.name', 'Site Name');
 		$title = t('my_account') . ' - ' . $appName;
-		
+
 		// Meta Tags
 		MetaTag::set('title', $title);
 		MetaTag::set('description', t('my_account_on', ['appName' => config('settings.app.name')]));
-		
+
 		return appView('account.edit', compact('genders', 'userTypes', 'authUser'));
 	}
 	
