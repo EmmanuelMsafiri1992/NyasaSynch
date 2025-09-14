@@ -2437,17 +2437,17 @@ html[dir="rtl"] body .intro h1, .intro html[dir="rtl"] body h1, html[dir="rtl"] 
 
 @media (min-width: 576px) {
 	.search-row .search-col:first-child .form-control {
-		border-radius: 24px 0 0 24px !important;
+		border-radius: 6px 0 0 6px !important;
 	}
 }
 
 .search-row .btn-search {
-	border-radius: 0 24px 24px 0 !important;
+	border-radius: 0 6px 6px 0 !important;
 }
 
 @media (min-width: 576px) {
 	.search-row .search-col:first-child .search-col-inner {
-		border-radius: 24px 0 0 24px !important;
+		border-radius: 6px 0 0 6px !important;
 	}
 }
 
@@ -2458,7 +2458,7 @@ html[dir="rtl"] body .intro h1, .intro html[dir="rtl"] body h1, html[dir="rtl"] 
 
 @media (max-width: 767px) {
 	.search-row .search-col .search-col-inner {
-		border-radius: 24px !important;
+		border-radius: 6px !important;
 	}
 }
 

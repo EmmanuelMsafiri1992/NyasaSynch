@@ -15,39 +15,7 @@
 @extends('layouts.master')
 
 @section('search')
-<div class="intro">
-	<div class="container">
-		<form id="search" name="search" action="{{ \App\Helpers\UrlGen::searchWithoutQuery() }}" method="GET">
-			<div class="row search-row">
-				<div class="col-md-5 col-sm-12 search-col relative mb-1 mb-xxl-0 mb-xl-0 mb-lg-0 mb-md-0">
-					<div class="search-col-inner">
-						<i class="fa-solid {{ (config('lang.direction')=='rtl') ? 'fa-angles-left' : 'fa-angles-right' }} icon-append"></i>
-						<div class="search-col-input">
-							<input class="form-control has-icon" name="q" placeholder="{{ t('what') }}" type="text" value="{{ request()->get('q') }}">
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4 col-sm-12 search-col relative locationicon mb-1 mb-xxl-0 mb-xl-0 mb-lg-0 mb-md-0">
-					<div class="search-col-inner">
-						<i class="fa-solid fa-location-dot icon-append"></i>
-						<div class="search-col-input">
-							<input class="form-control has-icon" id="locSearch" name="location" placeholder="{{ t('where') }}" type="text" value="{{ request()->get('location') }}">
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-3 col-sm-12 search-col">
-					<div class="search-btn">
-						<button class="btn btn-primary btn-search btn-block">
-							<i class="fa-solid fa-magnifying-glass"></i> <strong>{{ t('Find Jobs') }}</strong>
-						</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+	@parent
 @endsection
 
 @php
