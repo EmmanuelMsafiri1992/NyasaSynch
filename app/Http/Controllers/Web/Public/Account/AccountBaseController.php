@@ -62,11 +62,11 @@ abstract class AccountBaseController extends FrontController
 	 */
 	private function createAccountMenuDirect($authUser, $userStats = null): Collection
 	{
-		// Create the menu structure based on user type
+		// Create the menu structure - default to employer menu, with fallback for missing user_type_id
 		$menuArray = [];
 
-		// For employers (user_type_id = 1)
-		if ($authUser->user_type_id == 1) {
+		// Default employer menu (or fallback menu if user_type_id is missing)
+		if (empty($authUser->user_type_id) || $authUser->user_type_id == 1) {
 			$menuArray = [
 				[
 					'name'       => t('My companies'),
@@ -157,7 +157,7 @@ abstract class AccountBaseController extends FrontController
 			];
 		}
 
-		// Add My Account section for all user types
+		// Always add My Account section for all user types
 		$menuArray[] = [
 			'name'       => t('my_account'),
 			'url'        => url('account'),
@@ -167,7 +167,28 @@ abstract class AccountBaseController extends FrontController
 			'isActive'   => (request()->segment(1) == 'account' && request()->segment(2) == null),
 		];
 
+		// Ensure we always have some menu items
+		if (empty($menuArray)) {
+			$menuArray[] = [
+				'name'       => t('my_account'),
+				'url'        => url('account'),
+				'icon'       => 'fa-solid fa-gear',
+				'group'      => t('my_account'),
+				'countVar'   => null,
+				'isActive'   => true,
+			];
+		}
+
 		// Group menu by sections
-		return collect($menuArray)->groupBy('group');
+		$accountMenu = collect($menuArray)->groupBy('group');
+
+		// Debug: Log menu creation
+		\Log::info('Account menu created', [
+			'user_type_id' => $authUser->user_type_id ?? 'null',
+			'menu_groups' => $accountMenu->keys()->toArray(),
+			'total_items' => $accountMenu->flatten(1)->count()
+		]);
+
+		return $accountMenu;
 	}
 }
