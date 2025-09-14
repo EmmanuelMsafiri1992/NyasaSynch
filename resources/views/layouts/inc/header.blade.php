@@ -197,6 +197,33 @@
 											</a>
 										</li>
 									@endforeach
+								@else
+									{{-- Fallback menu items if $userMenu is empty --}}
+									<li class="dropdown-item">
+										<a href="{{ url('/account') }}">
+											<i class="fa-solid fa-user"></i> {{ t('My Account') }}
+										</a>
+									</li>
+									<li class="dropdown-item">
+										<a href="{{ url('/account/posts') }}">
+											<i class="fa-solid fa-list"></i> {{ t('My Listings') }}
+										</a>
+									</li>
+									<li class="dropdown-item">
+										<a href="{{ url('/account/messages') }}">
+											<i class="fa-solid fa-envelope"></i> {{ t('Messages') }}
+											<span class="badge badge-pill badge-important count-threads-with-new-messages">0</span>
+										</a>
+									</li>
+									<li class="dropdown-divider"></li>
+									<li class="dropdown-item">
+										<a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+											<i class="fa-solid fa-sign-out-alt"></i> {{ t('Logout') }}
+										</a>
+									</li>
+									<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+										@csrf
+									</form>
 								@endif
 							</ul>
 						</li>

@@ -270,29 +270,48 @@
 		SocialShare.init({width: 640, height: 480});
 
 		{{-- Bootstrap Dropdowns --}}
+		console.log('Initializing Bootstrap dropdowns...');
+
+		// Force dropdown functionality for user menu
+		const userDropdownToggle = document.querySelector('[data-bs-toggle="dropdown"]');
+		if (userDropdownToggle) {
+			console.log('Found dropdown toggle, setting up click handler');
+
+			userDropdownToggle.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				const dropdownMenu = document.getElementById('userMenuDropdown');
+				if (dropdownMenu) {
+					console.log('Toggling dropdown menu');
+					if (dropdownMenu.style.display === 'block') {
+						dropdownMenu.style.display = 'none';
+						dropdownMenu.classList.remove('show');
+					} else {
+						dropdownMenu.style.display = 'block';
+						dropdownMenu.classList.add('show');
+					}
+				} else {
+					console.log('Dropdown menu not found!');
+				}
+			});
+
+			// Close dropdown when clicking outside
+			document.addEventListener('click', function(e) {
+				const dropdownMenu = document.getElementById('userMenuDropdown');
+				if (dropdownMenu && !userDropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+					dropdownMenu.style.display = 'none';
+					dropdownMenu.classList.remove('show');
+				}
+			});
+		} else {
+			console.log('No dropdown toggle found!');
+		}
+
+		// Try Bootstrap initialization as well
 		if (typeof bootstrap !== 'undefined') {
 			document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(dropdownToggle) {
 				new bootstrap.Dropdown(dropdownToggle);
-			});
-		} else {
-			{{-- Fallback for manual dropdown functionality if Bootstrap is not available --}}
-			document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(dropdownToggle) {
-				dropdownToggle.addEventListener('click', function(e) {
-					e.preventDefault();
-					const targetId = this.getAttribute('href') || '#' + this.getAttribute('aria-controls') || this.nextElementSibling;
-					let dropdownMenu;
-
-					if (typeof targetId === 'string' && targetId.startsWith('#')) {
-						dropdownMenu = document.querySelector(targetId);
-					} else {
-						dropdownMenu = this.nextElementSibling;
-					}
-
-					if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
-						dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-						dropdownMenu.classList.toggle('show');
-					}
-				});
 			});
 		}
 

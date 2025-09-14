@@ -24,7 +24,8 @@
       "Bash(timeout:*)",
       "Bash(grep:*)",
       "Read(//c/laragon/www/updated/old/**)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Read(//c//**)"
     ],
     "deny": [],
     "ask": []
