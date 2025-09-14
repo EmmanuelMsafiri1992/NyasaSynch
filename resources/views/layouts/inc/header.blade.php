@@ -206,7 +206,7 @@
 									</li>
 									<li class="dropdown-item">
 										<a href="{{ url('/account/posts') }}">
-											<i class="fa-solid fa-list"></i> {{ t('My Listings') }}
+											<i class="fa-solid fa-list"></i> {{ t('my_listings') }}
 										</a>
 									</li>
 									<li class="dropdown-item">
@@ -218,7 +218,7 @@
 									<li class="dropdown-divider"></li>
 									<li class="dropdown-item">
 										<a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-											<i class="fa-solid fa-sign-out-alt"></i> {{ t('Logout') }}
+											<i class="fa-solid fa-sign-out-alt"></i> {{ t('logout') }}
 										</a>
 									</li>
 									<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
