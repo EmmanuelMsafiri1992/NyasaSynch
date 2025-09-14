@@ -268,7 +268,34 @@
 		
 		{{-- Social Media Share --}}
 		SocialShare.init({width: 640, height: 480});
-		
+
+		{{-- Bootstrap Dropdowns --}}
+		if (typeof bootstrap !== 'undefined') {
+			document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(dropdownToggle) {
+				new bootstrap.Dropdown(dropdownToggle);
+			});
+		} else {
+			{{-- Fallback for manual dropdown functionality if Bootstrap is not available --}}
+			document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(dropdownToggle) {
+				dropdownToggle.addEventListener('click', function(e) {
+					e.preventDefault();
+					const targetId = this.getAttribute('href') || '#' + this.getAttribute('aria-controls') || this.nextElementSibling;
+					let dropdownMenu;
+
+					if (typeof targetId === 'string' && targetId.startsWith('#')) {
+						dropdownMenu = document.querySelector(targetId);
+					} else {
+						dropdownMenu = this.nextElementSibling;
+					}
+
+					if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+						dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+						dropdownMenu.classList.toggle('show');
+					}
+				});
+			});
+		}
+
 		{{-- Modal Login --}}
 		@if (isset($errors) && $errors->any())
 			@if ($errors->any() && old('quickLoginForm')=='1')
